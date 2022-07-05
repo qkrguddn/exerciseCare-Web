@@ -3,13 +3,12 @@ package KKOBUGI.web.domain;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Slf4j @Getter @Setter
+@Getter @Setter
 public class Comment {
 
     @Id @GeneratedValue
@@ -32,4 +31,6 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Comment(){}
 }
