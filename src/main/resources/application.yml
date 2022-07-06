@@ -2,9 +2,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/example?serverTimezone=UTC&characterEncoding=UTF-8
-    username:
-    password:
+    url: jdbc:mysql://localhost:3306/db?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: matt1235
 
   jpa:
     hibernate:
@@ -16,5 +16,5 @@ spring:
 
 logging:
   level:
-    org.hibernate.SQL: debug
+    org.hibernate.SQL: info
     org.hibernate.type: trace
