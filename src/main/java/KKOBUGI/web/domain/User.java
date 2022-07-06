@@ -1,5 +1,6 @@
 package KKOBUGI.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@JsonAutoDetect
 public class User {
 
     @Id @GeneratedValue
@@ -20,9 +22,6 @@ public class User {
     private String login_Id;
     private String login_Pw;
     private String nickname;
-
-    @OneToMany(mappedBy = "user")
-    private List<Board> boards = new ArrayList<>();
 
     public User(Long id, String login_Id, String login_Pw, String nickname) {
         this.id = id;

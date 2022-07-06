@@ -4,10 +4,12 @@ import KKOBUGI.web.domain.User;
 import KKOBUGI.web.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +22,9 @@ public class UserController {
      * 유저 생성 : userId
      * */
     @PostMapping("/api/users")
-    public CreateUserResponse saveUser(@RequestBody @Valid CreateUserRequest request){
+    public CreateUserResponse saveUser(@RequestBody @Valid CreateUserRequest u){
         User user = new User();
-        user.setId(request.getId());
+        user.setNickname(u.getNickname());
 
         Long id = userService.save(user);
         return new CreateUserResponse(id);
@@ -47,13 +49,13 @@ public class UserController {
     /**
      * 유저 수정
      * */
-    @PatchMapping("/api/users/{id}")
+    @PutMapping("/api/users/{id}")
     public UpdateUserResponse updateUser(
-            @RequestBody UpdateUserRequest request,
-            @PathVariable("id") Long id){
+            @PathVariable("id") Long id,
+            @RequestBody @Valid UpdateUserRequest request){
         userService.update(id, request.getNickname());
-        User updatedUser = userService.findOne(id);
-        return new UpdateUserResponse(updatedUser.getId(), updatedUser.getNickname());
+        User findUser = userService.findOne(id);
+        return new UpdateUserResponse(findUser.getId(), findUser.getNickname());
     }
 
 
@@ -62,20 +64,23 @@ public class UserController {
      */
 
     @Data
-    @AllArgsConstructor
-    public static class CreateUserResponse {
+    static class CreateUserResponse {
         private Long id;
+
+        public CreateUserResponse(Long id){
+            this.id = id;
+        }
+    }
+
+    @Data
+    static class CreateUserRequest {
+        @NotEmpty
+        private String nickname;
     }
 
     @Data
     @AllArgsConstructor
-    public static class CreateUserRequest {
-        private Long id;
-    }
-
-    @Data
-    @AllArgsConstructor
-    public static class UserDto {
+    static class UserDto {
         private Long id;
         private String login_Id;
         private String login_Pw;
@@ -84,20 +89,22 @@ public class UserController {
 
     @Data
     @AllArgsConstructor
-    public static class Result<T> {
+    static class Result<T> {
         private int count;
         private T data;
     }
 
     @Data
     @AllArgsConstructor
-    public static class UpdateUserRequest{
+    @NoArgsConstructor
+    static class UpdateUserRequest{
         private String nickname;
     }
 
     @Data
     @AllArgsConstructor
-    private static class UpdateUserResponse {
+    @NoArgsConstructor
+    static class UpdateUserResponse {
         private Long id;
         private String nickname;
     }
