@@ -24,5 +24,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
 
+    public User(Long id, String login_Id, String login_Pw, String nickname) {
+        this.id = id;
+        this.login_Id = login_Id;
+        this.login_Pw = login_Pw;
+        this.nickname = nickname;
+    }
+
     public User(){}
 }
