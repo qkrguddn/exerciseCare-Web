@@ -16,8 +16,9 @@ public class UserRepository {
     /**
      * 유저 저장
      * */
-    public void save(User user){
+    public Long save(User user){
         em.persist(user);
+        return user.getId();
     }
 
     public User findOne(Long id){
