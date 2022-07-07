@@ -32,7 +32,7 @@ public class UserController {
 
     /**
      * 유저 전체 조회
-     * */
+     **/
     @GetMapping("/api/users")
     public Result Users(){
         List<User> findUsers = userService.findUsers();
