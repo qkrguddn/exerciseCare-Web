@@ -1,10 +1,12 @@
 package KKOBUGI.web.repository;
 
 import KKOBUGI.web.domain.Board;
+import KKOBUGI.web.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -12,6 +14,7 @@ import java.util.List;
 public class BoardRepository {
 
     private final EntityManager em;
+    private final UserRepository userRepository;
 
     /** board 저장
      * */
@@ -22,21 +25,30 @@ public class BoardRepository {
 
     /** 게시판 삭제
      * */
-    public void remove(Long boardId) {
-        em.createQuery("delete from Board b where b.id = :id").setParameter("id", boardId);
+    public Long remove(Long boardId) {
+        Board findBoard = em.find(Board.class, boardId);
+        em.remove(findBoard);
+        return boardId;
     }
 
 
     /**
      * 게시판 조회
      * */
-    // userId 로 find
-    public List<Board> findAll(Long userId){
-        return em.createQuery("select b from Board b join b.user u where u.id = :userId")
-                .setParameter("userId", userId)
-                .setMaxResults(20)
-                .getResultList();
+    // 모든 글 조회
+    public List<Board> findAll(){
+        List<Board> boards = em.createQuery("select b from Board b", Board.class).setMaxResults(20).getResultList();
+        return boards;
     }
+
+
+//    // userId 로 find
+//    public List<Board> findAll(Long userId){
+//        return em.createQuery("select b from Board b join b.user u where u.id = :userId")
+//                .setParameter("userId", userId)
+//                .setMaxResults(20)
+//                .getResultList();
+//    }
 
     // board_Id 로 find
     public Board findOne(Long id){

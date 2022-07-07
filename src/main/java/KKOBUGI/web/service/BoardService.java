@@ -3,7 +3,9 @@ package KKOBUGI.web.service;
 import KKOBUGI.web.domain.Board;
 import KKOBUGI.web.domain.User;
 import KKOBUGI.web.repository.BoardRepository;
+import KKOBUGI.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.MemberRemoval;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
     /**
      * board 저장  */
@@ -28,31 +31,31 @@ public class BoardService {
     /**
      *  게시판 수정  */
     @Transactional
-    public void fixBoard(Long boardId, String title, String content, LocalDateTime modifyDate){
+    public void fixBoard(Long boardId, String title, String content){
         Board board = boardRepository.findOne(boardId);
         board.setTitle(title);
         board.setContent(content);
-        board.setModifyDate(modifyDate);
+        board.setModifyDate(LocalDateTime.now());
     }
 
     /**
      * 게시판 삭제  */
     @Transactional
-    public void remove(Long boardId){
-        boardRepository.remove(boardId);
+    public Long remove(Long boardId){
+        return boardRepository.remove(boardId);
     }
 
 
     /**
      * 게시판 조회
      * */
-    // 한 유저가 작성한 게시판 모두 불러옴
-    public List<Board> findAll(User user){
-        return boardRepository.findAll(user.getId());
+    // 모든 글 조회.
+    public List<Board> findAll(){
+        return boardRepository.findAll();
     }
 
-    // board id로 찾음
-    public Board findOne(Long id){
+    // board id로 찾음 (필수)
+    public Board findById(Long id){
         return boardRepository.findOne(id);
     }
 
