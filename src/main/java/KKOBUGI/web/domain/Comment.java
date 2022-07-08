@@ -1,5 +1,6 @@
 package KKOBUGI.web.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+//@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Comment {
 
     @Id @GeneratedValue
@@ -16,21 +18,25 @@ public class Comment {
     @NotNull
     private Long id;
 
-    private String nickname;
-
-    private String content; /// 보류 ///
-
+    private String content;
     private LocalDateTime createDate;
 
-    /*FK*/
-    @ManyToOne(fetch = FetchType.LAZY)
+    /* FK */
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "board_id")
     private Board board;
 
-    /*FK*/
-    @ManyToOne(fetch = FetchType.LAZY)
+    /* FK */
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
     public Comment(){}
+
+    public Comment(String content, LocalDateTime createDate, Board board, User user) {
+        this.content = content;
+        this.createDate = createDate;
+        this.board = board;
+        this.user = user;
+    }
 }
