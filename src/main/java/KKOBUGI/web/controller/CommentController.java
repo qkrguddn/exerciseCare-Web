@@ -1,9 +1,8 @@
 package KKOBUGI.web.controller;
 
-import KKOBUGI.web.domain.Board;
-import KKOBUGI.web.domain.Comment;
-import KKOBUGI.web.domain.User;
-import KKOBUGI.web.domain.dto.CommentDtos;
+import KKOBUGI.web.domain.entity.Board;
+import KKOBUGI.web.domain.entity.Comment;
+import KKOBUGI.web.domain.entity.User;
 import KKOBUGI.web.service.BoardService;
 import KKOBUGI.web.service.CommentService;
 import KKOBUGI.web.service.UserService;
@@ -67,7 +66,7 @@ public class CommentController {
     /**
      * Comment 수정 */
     @PatchMapping("/api/comment")
-    public Long update(@RequestBody CommentDtos.CommentFixReqDto req){
+    public Long update(@RequestBody KKOBUGI.web.domain.dto.CommentDto.CommentFixReqDto req){
         Long id = req.getId();
         String content = req.getContent();
         Comment comment = commentService.findOne(id);

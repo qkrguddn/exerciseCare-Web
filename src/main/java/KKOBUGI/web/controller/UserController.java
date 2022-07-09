@@ -1,6 +1,6 @@
 package KKOBUGI.web.controller;
 
-import KKOBUGI.web.domain.User;
+import KKOBUGI.web.domain.entity.User;
 import KKOBUGI.web.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,8 +23,7 @@ public class UserController {
      * */
     @PostMapping("/api/users")
     public CreateUserResponse saveUser(@RequestBody @Valid CreateUserRequest u){
-        User user = new User();
-        user.setNickname(u.getNickname());
+        User user = new User(u.nickname);
 
         Long id = userService.save(user);
         return new CreateUserResponse(id);

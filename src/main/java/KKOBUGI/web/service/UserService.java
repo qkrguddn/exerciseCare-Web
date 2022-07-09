@@ -1,6 +1,6 @@
 package KKOBUGI.web.service;
 
-import KKOBUGI.web.domain.User;
+import KKOBUGI.web.domain.entity.User;
 import KKOBUGI.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,7 +43,7 @@ public class UserService {
     @Transactional
     public void update(Long id, String nickname){
         User user = userRepository.findOne(id);
-        user.setNickname(nickname);
+        user.fixNickname(nickname);
     }
 
 }
