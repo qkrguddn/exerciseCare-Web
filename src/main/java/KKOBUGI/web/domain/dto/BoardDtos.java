@@ -1,7 +1,6 @@
 package KKOBUGI.web.domain.dto;
 
-import KKOBUGI.web.controller.BoardController;
-import KKOBUGI.web.domain.Comment;
+import KKOBUGI.web.domain.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +15,15 @@ public class BoardDtos {
     @NoArgsConstructor
     public static class BoardRequestDto{
         public Long userId;
+        public String title;
+        public String content;
+    }
+
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class BoardReqFixDto{
         public String title;
         public String content;
     }

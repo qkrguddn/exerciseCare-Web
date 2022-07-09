@@ -1,15 +1,12 @@
 package KKOBUGI.web.controller;
 
-import KKOBUGI.web.domain.Board;
-import KKOBUGI.web.domain.Comment;
-import KKOBUGI.web.domain.User;
+import KKOBUGI.web.domain.entity.Board;
+import KKOBUGI.web.domain.entity.Comment;
+import KKOBUGI.web.domain.entity.User;
 import KKOBUGI.web.domain.dto.BoardDtos;
 import KKOBUGI.web.service.BoardService;
 import KKOBUGI.web.service.CommentService;
 import KKOBUGI.web.service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,6 +74,17 @@ public class BoardController {
 
 
     /**
+     * 게시판 수정 */
+    @PatchMapping("/api/board/{id}")
+    public Long fixBoard(@PathVariable("id")Long id, @RequestBody BoardDtos.BoardReqFixDto req){
+        String title = req.title;
+        String content = req.content;
+        boardService.fixBoard(id,title,content);
+        return id;
+    }
+
+
+    /**
      * 해당 글 세부 내용 보기
      * */
     @GetMapping("/api/board/{id}/detail")
@@ -86,6 +94,7 @@ public class BoardController {
         List<Comment> comments = commentService.findByBoardId(id);
         return new BoardDtos.ResponseBoardDetail(boardDto,comments);
     }
+
 
 
     /**
