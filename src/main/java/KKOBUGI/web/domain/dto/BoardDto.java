@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class BoardDtos {
+public class BoardDto {
 
     @Data
     @AllArgsConstructor
@@ -31,7 +31,7 @@ public class BoardDtos {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class BoardDto{
+    public static class ResponseBoardDto {
         public Long id;
         public String title;
         public String content;
@@ -54,7 +54,7 @@ public class BoardDtos {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ResponseBoardDetail{
-        BoardDto boardDto;
+        ResponseBoardDto boardDto;
         List<Comment> comments;
     }
 
