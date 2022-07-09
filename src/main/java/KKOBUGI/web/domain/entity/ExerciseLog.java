@@ -1,4 +1,4 @@
-package KKOBUGI.web.domain;
+package KKOBUGI.web.domain.entity;
 
 import com.sun.istack.NotNull;
 import lombok.Getter;

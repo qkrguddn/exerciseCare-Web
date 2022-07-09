@@ -1,4 +1,4 @@
-package KKOBUGI.web.domain;
+package KKOBUGI.web.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.sun.istack.NotNull;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 @JsonAutoDetect
 public class User {
 
@@ -23,6 +23,8 @@ public class User {
     private String login_Pw;
     private String nickname;
 
+    public User(){}
+
     public User(Long id, String login_Id, String login_Pw, String nickname) {
         this.id = id;
         this.login_Id = login_Id;
@@ -30,5 +32,11 @@ public class User {
         this.nickname = nickname;
     }
 
-    public User(){}
+    public User(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void fixNickname(String nickname){
+        this.nickname=nickname;
+    }
 }

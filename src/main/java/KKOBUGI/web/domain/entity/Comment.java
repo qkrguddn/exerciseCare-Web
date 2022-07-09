@@ -1,6 +1,5 @@
-package KKOBUGI.web.domain;
+package KKOBUGI.web.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;

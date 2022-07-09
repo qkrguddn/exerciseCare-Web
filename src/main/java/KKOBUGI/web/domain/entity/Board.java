@@ -1,18 +1,14 @@
-package KKOBUGI.web.domain;
+package KKOBUGI.web.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 public class Board {
 
     @Id @GeneratedValue
@@ -41,5 +37,18 @@ public class Board {
         this.createDate = createDate;
         this.modifyDate = modifyDate;
         this.user = user;
+    }
+
+    public Board(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.createDate = LocalDateTime.now();
+        this.user = user;
+    }
+
+    public void setBoard(String title, String content){
+        this.title = title;
+        this.content = content;
+        this.modifyDate = LocalDateTime.now();
     }
 }
