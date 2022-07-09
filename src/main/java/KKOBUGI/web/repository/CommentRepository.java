@@ -1,6 +1,6 @@
 package KKOBUGI.web.repository;
 
-import KKOBUGI.web.domain.Comment;
+import KKOBUGI.web.domain.entity.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package KKOBUGI.web.repository;
 
-import KKOBUGI.web.domain.User;
+import KKOBUGI.web.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

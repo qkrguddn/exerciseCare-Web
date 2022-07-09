@@ -1,12 +1,10 @@
 package KKOBUGI.web.repository;
 
-import KKOBUGI.web.domain.Board;
-import KKOBUGI.web.domain.User;
+import KKOBUGI.web.domain.entity.Board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository

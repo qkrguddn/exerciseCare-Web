@@ -1,15 +1,12 @@
 package KKOBUGI.web.service;
 
-import KKOBUGI.web.domain.Board;
-import KKOBUGI.web.domain.User;
+import KKOBUGI.web.domain.entity.Board;
 import KKOBUGI.web.repository.BoardRepository;
 import KKOBUGI.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.asm.MemberRemoval;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,9 +30,7 @@ public class BoardService {
     @Transactional
     public void fixBoard(Long boardId, String title, String content){
         Board board = boardRepository.findOne(boardId);
-        board.setTitle(title);
-        board.setContent(content);
-        board.setModifyDate(LocalDateTime.now());
+        board.setBoard(title, content);
     }
 
     /**

@@ -1,5 +1,5 @@
 package KKOBUGI.web.service;
-import KKOBUGI.web.domain.Comment;
+import KKOBUGI.web.domain.entity.Comment;
 import KKOBUGI.web.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
