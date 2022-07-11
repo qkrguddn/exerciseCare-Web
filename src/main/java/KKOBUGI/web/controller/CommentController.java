@@ -1,108 +1,68 @@
 package KKOBUGI.web.controller;
 
+import KKOBUGI.web.domain.dto.BoardDetailDto;
+import KKOBUGI.web.domain.dto.BoardDto;
+import KKOBUGI.web.domain.dto.CommentDto;
+import KKOBUGI.web.domain.dto.CommentDto;
 import KKOBUGI.web.domain.entity.Board;
 import KKOBUGI.web.domain.entity.Comment;
-import KKOBUGI.web.domain.entity.User;
+import KKOBUGI.web.repository.BoardRepository;
+import KKOBUGI.web.repository.CommentRepository;
 import KKOBUGI.web.service.BoardService;
 import KKOBUGI.web.service.CommentService;
-import KKOBUGI.web.service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequiredArgsConstructor
 public class CommentController {
+    @Autowired
+    CommentService commentService;
 
-    private final CommentService commentService;
-    private final BoardService boardService;
-    private final UserService userService;
+    //댓글 저장
+    @PostMapping("home/board/{id}")
+    public CommentDto saveComent(@PathVariable Long id, @RequestBody CommentDto commentDto) {
+        CommentDto savedComment = commentService.saveComment(id, commentDto);
+        return savedComment;
+    }
 
+    //댓글 삭제
+    @DeleteMapping("home/board/{id}/{number}")
+    public void deleteComment(@PathVariable Long number) {
+        commentService.deleteComment(number);
+    }
 
-    /**
-     * Comment 생성 * */
-    @PostMapping("/api/comment")
-    public CommentDto save(@RequestBody RequestCommentDto request){
-        String content = request.getContent();
-        Long userId = request.getUserId();
-        Long boardId = request.getBoardId();
-        Comment comment = new Comment(content, LocalDateTime.now(), boardService.findById(boardId), userService.findOne(userId));
-        commentService.save(comment);
-        return CommentToCommentDto(comment);
+    //세부사항 게시물 페이지(게시물 제목, 내용, 댓글목록) 조회
+    @GetMapping("home/board/{id}")
+    public BoardDetailDto getBoardCommentPage(@PathVariable Long id) {
+        return commentService.getBoardDetail(id);
     }
 
 
-    /**
-     * Comment 조회 : boardId로 조회 * */
-    @GetMapping("/api/comment")
-    public ResCommentFindDto findOne(@RequestBody ReqCommentFindDto req){
-        Long boardId = req.getBoardId();
-        List<Comment> comments = commentService.findByBoardId(boardId);
-        List<CommentDto> commentDtos = new ArrayList<>();
-        for (Comment c : comments) {
-            CommentDto commentDto = CommentToCommentDto(c);
-            commentDtos.add(commentDto);
-        }
-        return new ResCommentFindDto(commentDtos);
-    }
-
-
-    /**
-     * Comment 삭제 */
-    @DeleteMapping("/api/comment/{id}")
-    public Long delete(@PathVariable("id") Long id){
-        Comment comment = commentService.findOne(id);
-        Long deletedId = commentService.delete(comment);
-        return deletedId;
-    }
-
-
-    /**
-     * Comment 수정 */
-    @PatchMapping("/api/comment")
-    public Long update(@RequestBody KKOBUGI.web.domain.dto.CommentDto.CommentFixReqDto req){
-        Long id = req.getId();
-        String content = req.getContent();
-        Comment comment = commentService.findOne(id);
-        comment.setContent(content);
-        comment.setCreateDate(LocalDateTime.now());
-        return commentService.update(id, comment);
-    }
-
-
-    public CommentDto CommentToCommentDto(Comment c){
-        return new CommentDto(c.getId(),c.getContent(),c.getCreateDate(),c.getBoard(),c.getUser());
-    }
-
-    @Data @AllArgsConstructor @NoArgsConstructor
-    static class RequestCommentDto{
-        private String content;
-        private Long userId;
-        private Long boardId;
-    }
-
-    @Data @AllArgsConstructor @NoArgsConstructor
-    static class CommentDto{
-        private Long id;
-        private String content;
-        private LocalDateTime createDate;
-        private Board board;
-        private User user;
-    }
-
-    @Data @AllArgsConstructor @NoArgsConstructor
-    static class ReqCommentFindDto{
-        private Long boardId;
-    }
-
-    @Data @AllArgsConstructor @NoArgsConstructor
-    static class ResCommentFindDto{
-        private List<CommentDto> commentDtos;
+    @PatchMapping("home/board/{id}/{number}")
+    public CommentDto updateComment(@PathVariable Long id, @PathVariable Long number, @RequestBody CommentDto commentDto){
+        CommentDto savedComment = commentService.updateComment(number, commentDto.getContent());
+        return savedComment;
     }
 }
+/*
+@Controller(Rest -x)
+    @GetMapping("test")
+    public String test() {
+        Board board = new Board("guddn","health","good");
+        Board savedEntity = boardRepository.save(board);
+        BoardDto boardDto = boardService.getOneBoard(savedEntity.getId());
+        System.out.println(boardDto.toString());
+        return "write";
+    }
+    //api 통신할 때는 @RequestBody 추가할 것.
+    @PostMapping("test")
+    public String post(CommentDto commentDto ) {
+        Comment comment = commentDto.toEntity();
+        Comment savedComment = commentRepository.save(comment);
+        System.out.println("time: "+ savedComment.getCreateDate());
+        commentDto.setCreateDate(savedComment.getCreateDate());
+        System.out.println("dto" +commentDto.toString());
+        return "write";
+    }*/

@@ -1,5 +1,7 @@
 package KKOBUGI.web.controller;
 
+import KKOBUGI.web.domain.dto.BoardDetailDto;
+import KKOBUGI.web.domain.dto.CommentDto;
 import KKOBUGI.web.domain.entity.Board;
 import KKOBUGI.web.domain.entity.Comment;
 import KKOBUGI.web.domain.entity.User;
@@ -88,11 +90,9 @@ public class BoardController {
      * 해당 글 세부 내용 보기
      * */
     @GetMapping("/api/board/{id}/detail")
-    public BoardDto.ResponseBoardDetail boardDetail(@PathVariable("id") Long id){
-        Board board = boardService.findById(id);
-        BoardDto.ResponseBoardDto boardDto = BoardToBoardDto(board);
-        List<Comment> comments = commentService.findByBoardId(id);
-        return new BoardDto.ResponseBoardDetail(boardDto,comments);
+    public BoardDetailDto boardDetail(@PathVariable("id") Long id){
+        BoardDetailDto boardDetail = commentService.getBoardDetail(id);
+        return boardDetail;
     }
 
 
