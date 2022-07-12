@@ -27,7 +27,7 @@ public class BoardController {
 
     /**
      * 게시판 생성 */
-    @PostMapping("/api/board")
+    @PostMapping("/board")
     public BoardDto.ResponseBoardDto saveBoard(@RequestBody BoardDto.BoardRequestDto request){
         User user = userService.findOne(request.userId);
         Board board = new Board(request.title, request.content,LocalDateTime.now(),null,user);
@@ -39,9 +39,21 @@ public class BoardController {
     }
 
 
+
+    /**
+     * 게시판 수정 */
+    @PatchMapping("/board/{id}")
+    public Long fixBoard(@PathVariable("id")Long id, @RequestBody BoardDto.BoardReqFixDto req){
+        String title = req.title;
+        String content = req.content;
+        boardService.fixBoard(id,title,content);
+        return id;
+    }
+
+
     /**
      * 게시판  삭제 : boardId */
-    @DeleteMapping("/api/board/{id}")
+    @DeleteMapping("/board/{id}")
     public Long removeBoard(@PathVariable("id") Long id){
         Long removedId = boardService.remove(id);
         return removedId;
@@ -51,7 +63,7 @@ public class BoardController {
     /**
      * 게시판 전체 조회
      * */
-    @GetMapping("/api/board")
+    @GetMapping("/board")
     public List<BoardDto.ResponseBoardDto> findAll(){
         List<Board> boards = boardService.findAll();
         List<BoardDto.ResponseBoardDto> boardDtos = new ArrayList<>();
@@ -66,7 +78,7 @@ public class BoardController {
     /**
      * boardID로 조회
      * */
-    @GetMapping("/api/board/{id}")
+    @GetMapping("/board/{id}")
     public BoardDto.ResponseBoardDto findById(@PathVariable("id") Long id){
         Board b = boardService.findById(id);
         BoardDto.UserDto userDto = UserToUserDto(b.getUser());
@@ -75,25 +87,14 @@ public class BoardController {
     }
 
 
-    /**
-     * 게시판 수정 */
-    @PatchMapping("/api/board/{id}")
-    public Long fixBoard(@PathVariable("id")Long id, @RequestBody BoardDto.BoardReqFixDto req){
-        String title = req.title;
-        String content = req.content;
-        boardService.fixBoard(id,title,content);
-        return id;
-    }
-
-
-    /**
-     * 해당 글 세부 내용 보기
-     * */
-    @GetMapping("/api/board/{id}/detail")
-    public BoardDetailDto boardDetail(@PathVariable("id") Long id){
-        BoardDetailDto boardDetail = commentService.getBoardDetail(id);
-        return boardDetail;
-    }
+//    /**
+//     * 해당 글 세부 내용 보기
+//     * */
+//    @GetMapping("/board/{id}")
+//    public BoardDetailDto boardDetail(@PathVariable("id") Long id){
+//        BoardDetailDto boardDetail = commentService.getBoardDetail(id);
+//        return boardDetail;
+//    }
 
 
 
