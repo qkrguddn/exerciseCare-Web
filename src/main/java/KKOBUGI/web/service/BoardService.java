@@ -30,8 +30,7 @@ public class BoardService {
     @Transactional
     public void fixBoard(Long boardId, String title, String content){
         Board board = boardRepository.findOne(boardId);
-        String oldTitle = board.getTitle();
-        String oldContent = board.getContent();
+        board.setBoard(title,content);
     }
 
     /**

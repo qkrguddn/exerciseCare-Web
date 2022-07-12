@@ -21,10 +21,9 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-//@MappedSuperclass   @EntityListeners(AuditingEntityListener.class)
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "comment_id")
     private Long id;
     private String nickname;
@@ -43,17 +42,6 @@ public class Comment {
     private Board board;
 
     public Comment(Board board) {
-
-    }
-
-    public Comment(String content) {
-        //이것도 수정 코드 짤 때 한 건가 확인필요
-        this.content = content;
-    }
-    public Comment(CommentDto commentDto) {
-        //수정할 때 만든 건데 다시 짜야함.
-        this.nickname = commentDto.getNickname();
-        this.content  = commentDto.getContent();
 
     }
     public void changeComment(String content){
