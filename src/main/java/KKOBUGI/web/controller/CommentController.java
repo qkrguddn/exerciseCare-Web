@@ -20,31 +20,37 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-    //댓글 저장
-    @PostMapping("home/board/{id}")
-    public CommentDto saveComent(@PathVariable Long id, @RequestBody CommentDto commentDto) {
+    /**
+     * 저장 */
+    @PostMapping("/board/{id}")
+    public CommentDto saveComent(@PathVariable Long id, @RequestBody CommentDto commentDto) { // @RequestBody: content, nickname
         CommentDto savedComment = commentService.saveComment(id, commentDto);
         return savedComment;
     }
 
-    //댓글 삭제
-    @DeleteMapping("home/board/{id}/{number}")
+    /**
+     * 삭제 */
+    @DeleteMapping("/board/{id}/{number}")
     public void deleteComment(@PathVariable Long number) {
         commentService.deleteComment(number);
     }
 
-    //세부사항 게시물 페이지(게시물 제목, 내용, 댓글목록) 조회
-    @GetMapping("home/board/{id}")
-    public BoardDetailDto getBoardCommentPage(@PathVariable Long id) {
-        return commentService.getBoardDetail(id);
-    }
 
-
-    @PatchMapping("home/board/{id}/{number}")
-    public CommentDto updateComment(@PathVariable Long id, @PathVariable Long number, @RequestBody CommentDto commentDto){
+    /**
+     * 수정 */
+    @PatchMapping("/board/{id}/{number}")
+    public CommentDto updateComment(@PathVariable Long id, @PathVariable Long number, @RequestBody CommentDto commentDto){ //@RequestBody: content
         CommentDto savedComment = commentService.updateComment(number, commentDto.getContent());
         return savedComment;
     }
+
+
+//    /**
+//     * 세부사항 게시물 페이지(게시물 제목, 내용, 댓글목록) 조회 */
+//    @GetMapping("/board/{id}")
+//    public BoardDetailDto getBoardCommentPage(@PathVariable Long id) {
+//        return commentService.getBoardDetail(id);
+//    }
 }
 /*
 @Controller(Rest -x)
