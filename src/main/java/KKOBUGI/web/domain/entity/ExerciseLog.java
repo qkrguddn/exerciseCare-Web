@@ -1,13 +1,16 @@
 package KKOBUGI.web.domain.entity;
 
 import com.sun.istack.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Entity
-@Getter @Setter
 public class ExerciseLog {
 
     @Id @GeneratedValue
@@ -23,5 +26,10 @@ public class ExerciseLog {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public ExerciseLog(){}
+    private Long month;
+    private Long day;
+    private String date;
+//    calendar
+
+
 }

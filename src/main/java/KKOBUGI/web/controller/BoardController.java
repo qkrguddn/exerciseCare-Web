@@ -24,10 +24,9 @@ public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
 
-
     /**
      * 게시판 생성 */
-    @PostMapping("/api/board")
+    @PostMapping("/board")
     public BoardDto.ResponseBoardDto saveBoard(@RequestBody BoardDto.BoardRequestDto request){
         User user = userService.findOne(request.userId);
         Board board = new Board(request.title, request.content,LocalDateTime.now(),null,user);
@@ -39,45 +38,10 @@ public class BoardController {
     }
 
 
-    /**
-     * 게시판  삭제 : boardId */
-    @DeleteMapping("/api/board/{id}")
-    public Long removeBoard(@PathVariable("id") Long id){
-        Long removedId = boardService.remove(id);
-        return removedId;
-    }
-
-
-    /**
-     * 게시판 전체 조회
-     * */
-    @GetMapping("/api/board")
-    public List<BoardDto.ResponseBoardDto> findAll(){
-        List<Board> boards = boardService.findAll();
-        List<BoardDto.ResponseBoardDto> boardDtos = new ArrayList<>();
-        for (Board b : boards) {
-            BoardDto.UserDto userDto = UserToUserDto(b.getUser());
-            boardDtos.add(new BoardDto.ResponseBoardDto(b.getId(),b.getTitle(),b.getContent(),b.getCreateDate(),b.getModifyDate(),userDto));
-        }
-        return boardDtos;
-    }
-
-
-    /**
-     * boardID로 조회
-     * */
-    @GetMapping("/api/board/{id}")
-    public BoardDto.ResponseBoardDto findById(@PathVariable("id") Long id){
-        Board b = boardService.findById(id);
-        BoardDto.UserDto userDto = UserToUserDto(b.getUser());
-        BoardDto.ResponseBoardDto boardDto = BoardToBoardDto(b);
-        return boardDto;
-    }
-
 
     /**
      * 게시판 수정 */
-    @PatchMapping("/api/board/{id}")
+    @PatchMapping("/board/{id}")
     public Long fixBoard(@PathVariable("id")Long id, @RequestBody BoardDto.BoardReqFixDto req){
         String title = req.title;
         String content = req.content;
@@ -87,12 +51,37 @@ public class BoardController {
 
 
     /**
-     * 해당 글 세부 내용 보기
+     * 게시판  삭제 : boardId */
+    @DeleteMapping("/board/{id}")
+    public Long removeBoard(@PathVariable("id") Long id){
+        Long removedId = boardService.remove(id);
+        return removedId;
+    }
+
+
+    /**
+     * 게시판 전체 조회
      * */
-    @GetMapping("/api/board/{id}/detail")
-    public BoardDetailDto boardDetail(@PathVariable("id") Long id){
-        BoardDetailDto boardDetail = commentService.getBoardDetail(id);
-        return boardDetail;
+    @GetMapping("/board")
+    public List<BoardDto.ResponseBoardDto> findAll(){
+        List<Board> boards = boardService.findAll();
+        List<BoardDto.ResponseBoardDto> boardDtos = new ArrayList<>();
+        for (Board b : boards) {
+            BoardDto.UserDto userDto = UserToUserDto(b.getUser());
+            boardDtos.add(new BoardDto.ResponseBoardDto(b.getId(),b.getTitle(),b.getContent(),b.getCreateDate(),b.getModifyDate(),userDto));
+        }
+        return boardDtos;
+    }
+    /**
+     * boardID로 조회
+     * */
+    //게시판 내용만 보이고 댓글은 안보임 수정 필요
+    @GetMapping("/board/{id}")
+    public BoardDto.ResponseBoardDto findById(@PathVariable("id") Long id){
+        Board b = boardService.findById(id);
+        BoardDto.UserDto userDto = UserToUserDto(b.getUser());
+        BoardDto.ResponseBoardDto boardDto = BoardToBoardDto(b);
+        return boardDto;
     }
 
 
