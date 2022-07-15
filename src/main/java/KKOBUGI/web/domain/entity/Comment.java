@@ -1,20 +1,16 @@
 package KKOBUGI.web.domain.entity;
 
 import KKOBUGI.web.domain.dto.CommentDto;
-import KKOBUGI.web.domain.dto.CommentDto;
-import KKOBUGI.web.domain.entity.Board;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static javax.persistence.FetchType.LAZY;
 
