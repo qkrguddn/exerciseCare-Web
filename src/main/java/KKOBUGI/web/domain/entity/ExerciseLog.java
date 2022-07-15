@@ -18,6 +18,8 @@ public class ExerciseLog {
     private String content;
     private int time;
 
+    private String test;
+
     /*FK */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
