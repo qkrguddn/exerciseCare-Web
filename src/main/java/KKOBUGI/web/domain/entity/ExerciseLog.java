@@ -1,45 +1,46 @@
 package KKOBUGI.web.domain.entity;
 
-import KKOBUGI.web.domain.dto.ExerciseLogDto;
-import com.sun.istack.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Entity
-@Getter @Setter
 public class ExerciseLog {
 
-    @Id @GeneratedValue
-    @NotNull
+   @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "exerciselog_id")
     private Long id;
-    private LocalDateTime createDate;
-    private LocalDateTime modifyDate;
+
+    private String content;
+    private Long number;
+    private String detailLog; //무게 or 시간(달리기)
+    private int time; //하루 총 운동시간
+    private Long month;
+    private Long day;
+    private String date;
 
     /*FK */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+//    calendar
 
-    @OneToMany(mappedBy = "exerciseLog", cascade = CascadeType.ALL)
-    private List<Exercise> exerciseList = new ArrayList<>();
-
-    public ExerciseLog(){}
-
-    public void fixExerciseLog(ExerciseLogDto.ReqDtoList req){
-        exerciseList.clear();
-        List<ExerciseLogDto.ReqDto> reqDtoList = req.getReqDtoList();
-        for (ExerciseLogDto.ReqDto r : reqDtoList) {
-            Exercise ex = new Exercise();
-            ex.setExercise(r.getExName(),r.getWeight(),r.getCount());
-            ex.setExerciseLog(this);
-            exerciseList.add(ex);
-        }
+    public void changeExerciseLog(String content, String detailLog, Long number){
+        this.content = content;
+        this.detailLog = detailLog;
+        this.number = number;
     }
 
+    public ExerciseLog(String content,String detailLog, Long number, Long month, String date) {
+        this.content = content;
+        this.detailLog = detailLog;
+        this.number = number;
+        this.month = month;
+        this.date = date;
+    }
 }

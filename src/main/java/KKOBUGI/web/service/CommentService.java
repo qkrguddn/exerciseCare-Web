@@ -21,7 +21,6 @@ import java.util.Optional;
 @Transactional
 public class CommentService {
     /*등록, 수정, 삭제, 세부사항 게시판 페이지 조회*/
-    public static ArrayList<ArrayList<Comment>> comments = new ArrayList<ArrayList<Comment>>();
     @Autowired
     CommentRepository commentRepository;
     @Autowired

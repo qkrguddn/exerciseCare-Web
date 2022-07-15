@@ -24,7 +24,6 @@ public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
 
-
     /**
      * 게시판 생성 */
     @PostMapping("/board")
@@ -73,11 +72,10 @@ public class BoardController {
         }
         return boardDtos;
     }
-
-
     /**
      * boardID로 조회
      * */
+    //게시판 내용만 보이고 댓글은 안보임 수정 필요
     @GetMapping("/board/{id}")
     public BoardDto.ResponseBoardDto findById(@PathVariable("id") Long id){
         Board b = boardService.findById(id);
@@ -85,16 +83,6 @@ public class BoardController {
         BoardDto.ResponseBoardDto boardDto = BoardToBoardDto(b);
         return boardDto;
     }
-
-
-//    /**
-//     * 해당 글 세부 내용 보기
-//     * */
-//    @GetMapping("/board/{id}")
-//    public BoardDetailDto boardDetail(@PathVariable("id") Long id){
-//        BoardDetailDto boardDetail = commentService.getBoardDetail(id);
-//        return boardDetail;
-//    }
 
 
 

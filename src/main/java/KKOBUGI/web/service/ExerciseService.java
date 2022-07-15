@@ -1,9 +1,6 @@
 package KKOBUGI.web.service;
 
 
-import KKOBUGI.web.domain.entity.Exercise;
-import KKOBUGI.web.domain.entity.ExerciseLog;
-import KKOBUGI.web.repository.ExerciseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

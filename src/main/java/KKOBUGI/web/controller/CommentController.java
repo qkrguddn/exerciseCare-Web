@@ -44,31 +44,10 @@ public class CommentController {
         return savedComment;
     }
 
-
-//    /**
-//     * 세부사항 게시물 페이지(게시물 제목, 내용, 댓글목록) 조회 */
-//    @GetMapping("/board/{id}")
-//    public BoardDetailDto getBoardCommentPage(@PathVariable Long id) {
-//        return commentService.getBoardDetail(id);
-//    }
-}
-/*
-@Controller(Rest -x)
-    @GetMapping("test")
-    public String test() {
-        Board board = new Board("guddn","health","good");
-        Board savedEntity = boardRepository.save(board);
-        BoardDto boardDto = boardService.getOneBoard(savedEntity.getId());
-        System.out.println(boardDto.toString());
-        return "write";
+    //세부사항 게시물 페이지(게시물 제목, 내용, 댓글목록) 조회
+    @GetMapping("home/board/{id}")
+    public BoardDetailDto getBoardCommentPage(@PathVariable Long id) {
+        return commentService.getBoardDetail(id);
     }
-    //api 통신할 때는 @RequestBody 추가할 것.
-    @PostMapping("test")
-    public String post(CommentDto commentDto ) {
-        Comment comment = commentDto.toEntity();
-        Comment savedComment = commentRepository.save(comment);
-        System.out.println("time: "+ savedComment.getCreateDate());
-        commentDto.setCreateDate(savedComment.getCreateDate());
-        System.out.println("dto" +commentDto.toString());
-        return "write";
-    }*/
+
+}

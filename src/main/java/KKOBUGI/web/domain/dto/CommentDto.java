@@ -44,4 +44,3 @@ public class CommentDto {
         this.createDate = LocalDateTime.now();
     }
 }
-//dto에도 id넣어야 하나??

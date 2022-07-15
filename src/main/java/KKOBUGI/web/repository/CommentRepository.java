@@ -1,5 +1,6 @@
 package KKOBUGI.web.repository;
 
+import KKOBUGI.web.domain.entity.Board;
 import KKOBUGI.web.domain.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 

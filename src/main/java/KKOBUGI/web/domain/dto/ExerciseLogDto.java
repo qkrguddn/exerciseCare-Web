@@ -1,34 +1,26 @@
 package KKOBUGI.web.domain.dto;
 
-import KKOBUGI.web.controller.ExerciseLogController;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+@Data
 public class ExerciseLogDto {
+    private Long exerciseLogId;
+    private String content;
+    private String detailLog; //무게 or 시간(달리기)
+    private Long number;
+    private Long month;
+    private Long day;
+    private String date = month+"/"+day;
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class ReqDto {
-        private String exName;
-        private int weight;
-        private int count;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class ReqDtoList {
-        private List<ReqDto> reqDtoList;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class ResGetDto{
-        private List<ReqDto> reqDtoList;
+    @Builder
+    public ExerciseLogDto(Long exerciseLogId, String content, String detailLog, Long number, Long month, Long day, String date) {
+        this.exerciseLogId = exerciseLogId;
+        this.content = content;
+        this.detailLog = detailLog;
+        this.number = number;
+        this.month = month;
+        this.day = day;
+        this.date = date;
     }
 }
