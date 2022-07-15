@@ -4,12 +4,14 @@ import KKOBUGI.web.domain.dto.ExerciseLogDto;
 import KKOBUGI.web.domain.entity.Exercise;
 import KKOBUGI.web.domain.entity.ExerciseLog;
 import KKOBUGI.web.service.ExerciseLogService;
+import KKOBUGI.web.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -17,21 +19,24 @@ import java.util.List;
 public class ExerciseLogController {
 
     private final ExerciseLogService exerciseLogService;
+    private final UserService userService;
 
     /**
      * ExerciseLog 저장
      * */
-    @PostMapping("/{id}") // id는 exLog 의 id
-    public resDto saveExLog(
-            @PathVariable("id") Long id, @RequestBody ExerciseLogDto.ReqDtoList req) {
-        ExerciseLog exerciseLog = exerciseLogService.find(id);
+    @PostMapping
+    public resDto saveExLog(@RequestBody ExerciseLogDto.ReqDtoList req) {
+        ExerciseLog exerciseLog = new ExerciseLog();
+        exerciseLog.setUser(userService.findOne(1L));
+        exerciseLog.setCreateDate(LocalDateTime.now());
         List<ExerciseLogDto.ReqDto> requestExLogDtoList = req.getReqDtoList();
         for (ExerciseLogDto.ReqDto r : requestExLogDtoList) {
             Exercise exercise = new Exercise();
             exercise.setExercise(r.getExName(),r.getWeight(),r.getCount());
             exercise.setExerciseLog(exerciseLog);
         }
-        return new resDto(id);
+        exerciseLogService.save(exerciseLog);
+        return new resDto(exerciseLog.getId());
     }
 
 
