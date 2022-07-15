@@ -26,7 +26,7 @@ public class ExerciseLog {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "exerciseLog")
+    @OneToMany(mappedBy = "exerciseLog", cascade = CascadeType.ALL)
     private List<Exercise> exerciseList = new ArrayList<>();
 
     public ExerciseLog(){}
@@ -37,6 +37,7 @@ public class ExerciseLog {
         for (ExerciseLogDto.ReqDto r : reqDtoList) {
             Exercise ex = new Exercise();
             ex.setExercise(r.getExName(),r.getWeight(),r.getCount());
+            ex.setExerciseLog(this);
             exerciseList.add(ex);
         }
     }

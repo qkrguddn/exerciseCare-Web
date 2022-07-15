@@ -4,6 +4,7 @@ import KKOBUGI.web.domain.dto.ExerciseLogDto;
 import KKOBUGI.web.domain.entity.Exercise;
 import KKOBUGI.web.domain.entity.ExerciseLog;
 import KKOBUGI.web.service.ExerciseLogService;
+import KKOBUGI.web.service.ExerciseService;
 import KKOBUGI.web.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,11 +22,12 @@ public class ExerciseLogController {
 
     private final ExerciseLogService exerciseLogService;
     private final UserService userService;
+    private final ExerciseService exerciseService;
 
     /**
      * ExerciseLog 저장
      * */
-    @PostMapping
+    @PostMapping("/")
     public resDto saveExLog(@RequestBody ExerciseLogDto.ReqDtoList req) {
         ExerciseLog exerciseLog = new ExerciseLog();
         exerciseLog.setUser(userService.findOne(1L));
@@ -47,14 +50,18 @@ public class ExerciseLogController {
     public ExerciseLogDto.ResGetDto getExLog (@PathVariable("id") Long id){
         ExerciseLog exerciseLog = exerciseLogService.find(id);
         List<Exercise> exercises = exerciseLog.getExerciseList();
+        for (Exercise ex : exercises) {
+            System.out.println(ex.getId());
+        }
         ExerciseLogDto.ResGetDto res = new ExerciseLogDto.ResGetDto();
-
+        List<ExerciseLogDto.ReqDto> reqDtoList = new ArrayList<>();
         for (Exercise ex : exercises) {
             String exName = ex.getExName();
             int weight = ex.getWeight();
             int count = ex.getCount();
-            res.getReqDtoList().add(new ExerciseLogDto.ReqDto(exName, weight, count));
+            reqDtoList.add(new ExerciseLogDto.ReqDto(exName,weight,count));
         }
+        res.setReqDtoList(reqDtoList);
         return res;
     }
 
@@ -64,6 +71,7 @@ public class ExerciseLogController {
      * */
     @PatchMapping("/{id}")
     public resDto fixExLog(@PathVariable("id") Long id, @RequestBody ExerciseLogDto.ReqDtoList req){
+        exerciseService.delete(id);
         Long fixId = exerciseLogService.fix(id, req);
         return new resDto(fixId);
     }
@@ -78,6 +86,7 @@ public class ExerciseLogController {
     }
 
 
+    @Data
     static class resDto {
         Long id;
 

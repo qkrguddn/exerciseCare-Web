@@ -1,6 +1,7 @@
 package KKOBUGI.web.domain.entity;
 
 import lombok.Getter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 

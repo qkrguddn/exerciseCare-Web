@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ExerciseLogService {
 
-    private ExerciseLogRepository exerciseLogRepository;
+    private final ExerciseLogRepository exerciseLogRepository;
 
     /**
      * 저장 */
