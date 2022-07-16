@@ -72,18 +72,6 @@ public class BoardController {
         }
         return boardDtos;
     }
-    /**
-     * boardID로 조회
-     * */
-    //게시판 내용만 보이고 댓글은 안보임 수정 필요
-    @GetMapping("/board/{id}")
-    public BoardDto.ResponseBoardDto findById(@PathVariable("id") Long id){
-        Board b = boardService.findById(id);
-        BoardDto.UserDto userDto = UserToUserDto(b.getUser());
-        BoardDto.ResponseBoardDto boardDto = BoardToBoardDto(b);
-        return boardDto;
-    }
-
 
 
     /**

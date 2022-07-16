@@ -16,6 +16,7 @@ public class ExerciseLogController {
     /*ok
      * 운동 저장*/
     @PostMapping("calendar/{month}/{day}")
+    // @RequestBody : content, detailLog, number
     public ExerciseLogDto saveExerciseLog(@PathVariable Long month, @PathVariable Long day,
                                           @RequestBody ExerciseLog exerciseLog){
 
@@ -43,6 +44,7 @@ public class ExerciseLogController {
 
     /*수정
      * ok*/
+    // @RequestBody : content, detailLog, number
     @PatchMapping("calendar/{month}/{day}/{exerciseLogId}")
     public ExerciseLogDto updateExerciseLog(@PathVariable Long exerciseLogId
             ,@RequestBody ExerciseLog exerciseLog){

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 public class ExerciseLog {
 
-   @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "exerciselog_id")
     private Long id;
 

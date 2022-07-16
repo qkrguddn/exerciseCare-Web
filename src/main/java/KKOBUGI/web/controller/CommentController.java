@@ -45,7 +45,7 @@ public class CommentController {
     }
 
     //세부사항 게시물 페이지(게시물 제목, 내용, 댓글목록) 조회
-    @GetMapping("home/board/{id}")
+    @GetMapping("/board/{id}")
     public BoardDetailDto getBoardCommentPage(@PathVariable Long id) {
         return commentService.getBoardDetail(id);
     }
