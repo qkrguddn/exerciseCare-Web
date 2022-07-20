@@ -1,12 +1,37 @@
 package KKOBUGI.web.repository;
 
-import KKOBUGI.web.domain.entity.Board;
 import KKOBUGI.web.domain.entity.Comment;
-import org.springframework.data.jpa.repository.JpaRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
+import javax.persistence.EntityManager;
 
-public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findAllByPostId(Long postId);
+@Repository
+@RequiredArgsConstructor
+public class CommentRepository {
+
+    private final EntityManager em;
+
+    /**
+     * Comment 생성 */
+    public void save(Comment comment){
+        em.persist(comment);
+        comment.getBoard().getComments().add(comment);
+    }
+
+    /**
+     * Comment 삭제 */
+    public Long remove(Long commentId){
+        Comment comment = em.find(Comment.class, commentId);
+        em.remove(comment);
+        return commentId;
+    }
+
+    /**
+     * 조회 */
+    public Comment findOne(Long commentId){
+        return em.find(Comment.class, commentId);
+    }
 
 }

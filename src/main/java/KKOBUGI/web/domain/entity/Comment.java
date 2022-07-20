@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 public class Comment {
@@ -22,9 +21,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "comment_id")
     private Long id;
-    private String nickname;
     private String content;
-    private Long postId;
 
     @CreatedDate
     @Column(updatable = false)
@@ -38,27 +35,17 @@ public class Comment {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    public Comment(Board board) {
+    public Comment(){}
 
+    public void setComment(String content, LocalDateTime createDate, User user, Board board){
+        this.content = content;
+        this.createDate = createDate;
+        this.user = user;
+        this.board = board;
     }
-    public void changeComment(String content){
+
+    public void fixComment(String content){
         this.content = content;
     }
 
-    public CommentDto toCommentDto() {
-        return CommentDto.builder()
-                .postId(postId)
-                .nickname(nickname)
-                .content(content)
-                .createDate(createDate.now())
-                .build();
-    }
-    @Builder // 빌더 패턴 적용
-    public Comment(Long id, Long postId, String nickname, String content, LocalDateTime createDate) {
-        this.id = id;
-        this.postId = postId;
-        this.nickname = nickname;
-        this.content = content;
-        this.createDate = createDate.now();
-    }
 }
