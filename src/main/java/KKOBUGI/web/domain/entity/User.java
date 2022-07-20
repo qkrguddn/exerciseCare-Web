@@ -23,6 +23,7 @@ public class User {
     private String login_Pw;
     private String nickname;
 
+
     public User(){}
 
     public User(Long id, String login_Id, String login_Pw, String nickname) {
