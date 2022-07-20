@@ -4,6 +4,7 @@ import KKOBUGI.web.domain.dto.BoardDetailDto;
 import KKOBUGI.web.domain.dto.CommentDto;
 import KKOBUGI.web.domain.entity.Board;
 import KKOBUGI.web.domain.entity.Comment;
+import KKOBUGI.web.domain.dto.CommentDto;
 import KKOBUGI.web.domain.entity.User;
 import KKOBUGI.web.domain.dto.BoardDto;
 import KKOBUGI.web.service.BoardService;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequiredArgsConstructor
@@ -71,6 +75,17 @@ public class BoardController {
             boardDtos.add(new BoardDto.ResponseBoardDto(b.getId(),b.getTitle(),b.getContent(),b.getCreateDate(),b.getModifyDate(),userDto));
         }
         return boardDtos;
+    }
+
+
+    /**
+     * 세부사항 게시물 페이지 조회
+     * : 게시판 id, 게시판 title, 게시판 content, CommentDtosList */
+    @GetMapping("/board/{boardId}")
+    public BoardDto.BoardDetailDto boardDetail(@PathVariable("boardId") Long id) {
+        Board board = boardService.findById(id);
+        List<BoardDto.CommentDtos> commentDtos = board.getComments().stream().map(o -> new BoardDto.CommentDtos(o.getId(), o.getContent())).collect(toList());
+        return new BoardDto.BoardDetailDto(board.getId(), board.getTitle(), board.getContent(), commentDtos);
     }
 
 

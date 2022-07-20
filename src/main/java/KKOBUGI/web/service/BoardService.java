@@ -1,6 +1,7 @@
 package KKOBUGI.web.service;
 
 import KKOBUGI.web.domain.entity.Board;
+import KKOBUGI.web.domain.entity.Comment;
 import KKOBUGI.web.repository.BoardRepository;
 import KKOBUGI.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

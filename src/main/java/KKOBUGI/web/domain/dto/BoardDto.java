@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDto {
@@ -74,5 +75,24 @@ public class BoardDto {
     @NoArgsConstructor
     public static class RequestBoard{
         public Long boardId;
+    }
+
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class BoardDetailDto{
+        private Long id;
+        private String title;
+        private String content;
+        private List<CommentDtos> commentDtosList = new ArrayList<>();
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CommentDtos{
+        private Long id;
+        private String content;
     }
 }
