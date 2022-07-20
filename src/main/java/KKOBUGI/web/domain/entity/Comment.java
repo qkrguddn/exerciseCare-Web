@@ -25,6 +25,7 @@ public class Comment {
     private String nickname;
     private String content;
     private Long postId;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createDate;

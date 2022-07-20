@@ -16,10 +16,9 @@ public class ExerciseLogController {
     /*ok
      * 운동 저장*/
     @PostMapping("calendar/{month}/{day}")
-    // @RequestBody : content, detailLog, number
+    // @RequestBody " date, time, List<ExerciseLog>
     public ExerciseLogDto saveExerciseLog(@PathVariable Long month, @PathVariable Long day,
                                           @RequestBody ExerciseLog exerciseLog){
-
         ExerciseLogDto exerciseLogDto = exerciseLogService.saveExerciseLog(exerciseLog, month, day);
         return exerciseLogDto;
     }
