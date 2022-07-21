@@ -20,12 +20,11 @@ public class ExerciseLogService {
     ExerciseLogRepository exerciseLogRepository;
 
     /**
-     * 저장
+     * 저장: 운동이름, 무게, 횟수, 날짜, 시간
      */
-    public ExerciseLogDto saveExerciseLog(ExerciseLog exerciseLog, Long month, Long day) {
-    String date = month+ "/"+ day;
+    public ExerciseLogDto saveExerciseLog(ExerciseLog exerciseLog) {
         exerciseLog = new ExerciseLog(exerciseLog.getContent(), exerciseLog.getDetailLog(), exerciseLog.getNumber(),
-                month, date);
+                exerciseLog.getDate(), exerciseLog.getTime());
         ExerciseLog savedExerciseLog = exerciseLogRepository.save(exerciseLog);
         ExerciseLogDto exerciseLogDto = toExerciseLogDto(savedExerciseLog);
 
@@ -34,24 +33,13 @@ public class ExerciseLogService {
 
     /*
      * day에 따른 하루 운동기록 조회*/
-    public List<ExerciseLogDto> getExerciseLogByday(Long month, Long day) {
-        String date = month + "/" + day;
+    public List<ExerciseLogDto> getExerciseLogByDay(int date) {
         List<ExerciseLog> exerciseLogList = exerciseLogRepository.findAllByDate(date);
         List<ExerciseLogDto> exerciseLogDtoList = new ArrayList<>();
         for (ExerciseLog exerciseLog : exerciseLogList) {
             exerciseLogDtoList.add(toExerciseLogDto(exerciseLog));
         }
-        return exerciseLogDtoList;
-    }
 
-    /*
-     * month에 따른 한달 운동기록 전체 조회*/
-    public List<ExerciseLogDto> getExerciseLogByMonth(Long month) {
-        List<ExerciseLog> exerciseLogList = exerciseLogRepository.findAllByMonth(month);
-        List<ExerciseLogDto> exerciseLogDtoList = new ArrayList<>();
-        for (ExerciseLog exerciseLog : exerciseLogList) {
-            exerciseLogDtoList.add(toExerciseLogDto(exerciseLog));
-        }
         return exerciseLogDtoList;
     }
 
@@ -71,8 +59,7 @@ public class ExerciseLogService {
      * delete에서 id, day, 운동이름 어떤 것 기준으로 삭제할 지 정해야함
      * */
     //하루 기록 삭제
-    public void deleteExerciseLogByday(Long month, Long day) {
-        String date = month + "/" + day;
+    public void deleteExerciseLogByDate(int date) {
         exerciseLogRepository.deleteByDate(date);
     }
 
@@ -85,8 +72,19 @@ public class ExerciseLogService {
                 .detailLog(exerciseLog.getDetailLog())
                 .number(exerciseLog.getNumber())
                 .date(exerciseLog.getDate())
+                .time(exerciseLog.getTime())
                 .build();
     }
+    /*
+     * month에 따른 한달 운동기록 전체 조회*/
+//    public List<ExerciseLogDto> getExerciseLogByMonth(Long month) {
+//        List<ExerciseLog> exerciseLogList = exerciseLogRepository.findAllByMonth(month);
+//        List<ExerciseLogDto> exerciseLogDtoList = new ArrayList<>();
+//        for (ExerciseLog exerciseLog : exerciseLogList) {
+//            exerciseLogDtoList.add(toExerciseLogDto(exerciseLog));
+//        }
+//        return exerciseLogDtoList;
+//    }
 }
 
 /*

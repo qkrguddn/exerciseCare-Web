@@ -9,18 +9,18 @@ public class ExerciseLogDto {
     private String content;
     private String detailLog; //무게 or 시간(달리기)
     private Long number;
-    private Long month;
-    private Long day;
-    private String date = month+"/"+day;
+    private int date;
+    private String time;
 
     @Builder
-    public ExerciseLogDto(Long exerciseLogId, String content, String detailLog, Long number, Long month, Long day, String date) {
+    public ExerciseLogDto(Long exerciseLogId, String content, String detailLog,
+                          Long number, int date, String time) {
         this.exerciseLogId = exerciseLogId;
         this.content = content;
         this.detailLog = detailLog;
         this.number = number;
-        this.month = month;
-        this.day = day;
         this.date = date;
+        this.time = time;
     }
+
 }
