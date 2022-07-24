@@ -35,11 +35,12 @@ public class ExerciseLog {
         this.number = number;
     }
 
-    public ExerciseLog(String content, String detailLog, Long number, int date, String time) {
+    public ExerciseLog(String content, String detailLog, Long number, int date, String time, User user) {
         this.content = content;
         this.detailLog = detailLog;
         this.number = number;
         this.date = date;
         this.time =time;
+        this.user = user;
     }
 }

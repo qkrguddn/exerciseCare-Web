@@ -1,18 +1,49 @@
 package KKOBUGI.web.domain.dto;
 
+import KKOBUGI.web.domain.entity.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
+
 public class ExerciseLogDto {
-    private Long exerciseLogId;
-    private String content;
-    private String detailLog; //무게 or 시간(달리기)
-    private Long number;
-    private int date;
-    private String time;
 
-    @Builder
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ExerciseLogRequestDto{
+        public Long userId;
+        public String content;
+        public String detailLog; //무게 or 시간(달리기)
+        public Long number;
+        public int date;
+        public String time;
+    }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ExerciseLogResponseDto{
+        public String content;
+        public String detailLog; //무게 or 시간(달리기)
+        public Long number;
+        public int date;
+        public String time;
+        public UserDto user;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserDto{
+        public Long id;
+        public String login_Id;
+        public String login_Pw;
+        public String nickname;
+    }
+
+
+  /*  @Builder
     public ExerciseLogDto(Long exerciseLogId, String content, String detailLog,
                           Long number, int date, String time) {
         this.exerciseLogId = exerciseLogId;
@@ -21,6 +52,7 @@ public class ExerciseLogDto {
         this.number = number;
         this.date = date;
         this.time = time;
-    }
+
+    }*/
 
 }

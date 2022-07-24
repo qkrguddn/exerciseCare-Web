@@ -19,7 +19,7 @@ public class UserController {
 
     private final UserService userService;
     /**
-     * 유저 생성 : userId
+     * 유저 생성 : 회원가입
      * */
     @PostMapping("/api/users")
     public CreateUserResponse saveUser(@RequestBody @Valid CreateUserRequest u){
