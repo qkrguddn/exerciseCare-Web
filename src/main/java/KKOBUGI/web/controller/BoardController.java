@@ -35,8 +35,8 @@ public class BoardController {
         User user = userService.findOne(request.userId);
         Board board = new Board(request.title, request.content,LocalDateTime.now(),null,user);
         Long boardId = boardService.save(board);
+        user.saveBoard(boardService.findById(boardId));  // user에도 board추가
 
-        BoardDto.UserDto userDto = UserToUserDto(user);
         BoardDto.ResponseBoardDto boardDto = BoardToBoardDto(board);
         return boardDto;
     }

@@ -17,7 +17,7 @@ public class CommentRepository {
      * Comment 생성 */
     public void save(Comment comment){
         em.persist(comment);
-        comment.getBoard().getComments().add(comment);
+        comment.getBoard().getComments().add(comment);  // board 에 comment 추가
     }
 
     /**

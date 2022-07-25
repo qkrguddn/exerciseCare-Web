@@ -27,11 +27,11 @@ public class Comment {
     @Column(updatable = false)
     private LocalDateTime createDate;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "board_id")
     private Board board;
 
