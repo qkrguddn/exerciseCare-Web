@@ -7,7 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,7 +20,9 @@ public class CommentDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ReqCreateDto{
+        @NotFound
         public Long userId;
+        @NotEmpty @NotNull
         public String content;
     }
 

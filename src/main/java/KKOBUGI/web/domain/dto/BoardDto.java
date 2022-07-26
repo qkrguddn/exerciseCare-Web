@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,12 +16,12 @@ import java.util.List;
 public class BoardDto {
 
     @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
     public static class BoardRequestDto{
-        public Long userId;
-        public String title;
-        public String content;
+        private Long userId;
+        @NotEmpty @NotNull @NotBlank
+        private String title;
+        @NotEmpty @NotNull @NotBlank
+        private String content;
     }
 
 
@@ -26,7 +29,9 @@ public class BoardDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class BoardReqFixDto{
+        @NotNull @NotEmpty @NotBlank
         public String title;
+        @NotNull @NotEmpty @NotBlank
         public String content;
     }
 
@@ -74,6 +79,7 @@ public class BoardDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class RequestBoard{
+        @NotNull
         public Long boardId;
     }
 

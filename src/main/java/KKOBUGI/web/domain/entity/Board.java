@@ -18,7 +18,9 @@ public class Board {
     @NotNull
     private Long id;
 
+    @NotNull
     private String title;
+    @NotNull
     private String content;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;

@@ -24,7 +24,7 @@ public class BoardRepository {
     /** 게시판 삭제
      * */
     public Long remove(Long boardId) {
-        Board findBoard = em.find(Board.class, boardId);
+        Board findBoard = findOne(boardId);
         em.remove(findBoard);
         return boardId;
     }
@@ -50,7 +50,9 @@ public class BoardRepository {
 
     // board_Id 로 find
     public Board findOne(Long id){
-        return em.find(Board.class, id);
+        Board board = em.find(Board.class, id);
+        if(board ==null) throw new NullPointerException("boardId 값 확인 요망");
+        return board;
     }
 
     // title 로 찾음

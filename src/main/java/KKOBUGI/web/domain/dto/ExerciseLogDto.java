@@ -52,7 +52,6 @@ public class ExerciseLogDto {
         this.number = number;
         this.date = date;
         this.time = time;
-
     }*/
 
 }

@@ -9,12 +9,14 @@ import KKOBUGI.web.domain.entity.User;
 import KKOBUGI.web.domain.dto.BoardDto;
 import KKOBUGI.web.exception.FindNoUserException;
 import KKOBUGI.web.exception.NoArgumentException;
+import KKOBUGI.web.exception.NoUserIdException;
 import KKOBUGI.web.service.BoardService;
 import KKOBUGI.web.service.CommentService;
 import KKOBUGI.web.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +36,9 @@ public class BoardController {
     /**
      * 게시판 생성 */
     @PostMapping("/board")
-    public ResponseBoardDto saveBoard(@RequestBody BoardRequestDto request){
-        //필수 인자 예외처리
-        checkArgument(request.getUserId(), "there is no user_Id in request body");
-
-        User user = userService.findOne(request.userId);
-        Board board = new Board(request.title, request.content,LocalDateTime.now(),null,user);
+    public ResponseBoardDto saveBoard(@RequestBody @Valid BoardRequestDto request){
+        User user = userService.findOne(request.getUserId());
+        Board board = new Board(request.getTitle(), request.getContent(),LocalDateTime.now(),null,user);
         Long boardId = boardService.save(board);
         user.saveBoard(boardService.findById(boardId));  // user에도 board추가
 
@@ -52,10 +51,9 @@ public class BoardController {
     /**
      * 게시판 수정 */
     @PatchMapping("/board/{id}")
-    public Long fixBoard(@PathVariable("id")Long id, @RequestBody BoardReqFixDto req){
+    public Long fixBoard(@PathVariable("id")Long id, @RequestBody @Valid BoardReqFixDto req){
         String title = req.title;
         String content = req.content;
-        checkArgument(title, "there is no title in request body");
         boardService.fixBoard(id,title,content);
         return id;
     }
@@ -108,7 +106,7 @@ public class BoardController {
     }
 
     public void checkArgument(Object o, String message){
-        if(o==null)
+        if(o==null || o.equals(""))
             throw new NoArgumentException(message);
     }
 }

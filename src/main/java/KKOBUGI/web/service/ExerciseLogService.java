@@ -102,6 +102,3 @@ public class ExerciseLogService {
                 .time(exerciseLog.getTime())
                 .build();
     }*/
-
-
-

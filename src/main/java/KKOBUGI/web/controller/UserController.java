@@ -3,6 +3,7 @@ package KKOBUGI.web.controller;
 
 import KKOBUGI.web.domain.entity.User;
 import KKOBUGI.web.exception.DuplicateUserException;
+import KKOBUGI.web.exception.FindNoUserException;
 import KKOBUGI.web.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +24,29 @@ public class UserController {
      * */
     @PostMapping("/users")
     public CreateUserResponse saveUser(@RequestBody @Valid CreateUserRequest u){
-        DuplicateCheck duplicateCheck = userService.duplicateCheck(u.getLoginId(), u.getNickname());
-        say(duplicateCheck);
+        // 회원 가입 시 loginID, nickname 증복 검증
+        userService.duplicateCheck(u.getLoginId(), u.getNickname());
 
         User user = new User(u.getLoginId(),u.getPw(),u.getNickname());
         Long id = userService.save(user);
         return new CreateUserResponse(id);
     }
+
+
+    /**
+     * 로그인 */
+    @PostMapping("/login")
+    public ResLoginDto Login(@RequestBody ReqLoginDto req) {
+        String loginId = req.getLoginId();
+        String pw = req.getPw();
+
+        userService.login(loginId,pw);
+        /* 로그인 완료*/
+
+        User user = userService.findByloginId(loginId);
+        return new ResLoginDto(user.getId(), user.getNickname());
+    }
+
 
     /**
      * 유저 전체 조회
@@ -50,12 +67,11 @@ public class UserController {
     /**
      * 유저 수정
      * */
-    @PatchMapping("/users/{id}")
-    public UpdateUserResponse updateUser(
-            @PathVariable("id") Long id,
-            @RequestBody @Valid UpdateUserRequest request){
-        userService.update(id, request.getNickname());
-        User findUser = userService.findOne(id);
+    @PatchMapping("/users")
+    public UpdateUserResponse updateUser(@RequestBody @Valid UpdateUserRequest req){
+
+        userService.update(req.getUserId(), req.getNickname());
+        User findUser = userService.findOne(req.getUserId());
         return new UpdateUserResponse(findUser.getId(), findUser.getNickname());
     }
 
@@ -64,19 +80,14 @@ public class UserController {
      * 회원탈퇴 : 유저 삭제
      * */
     @DeleteMapping("/users")
-    public DeleteUserRes deleteUser(@RequestBody DeleteUserReq req){
-        Boolean check = userService.check(req.getLoginId(), req.getPw());
-        User user = userService.findByloginId(req.getLoginId());
-        Long id = userService.delete(user);
-        return new DeleteUserRes(id);
+    public DeleteUserRes deleteUser(@RequestBody @Valid DeleteUserReq req){
+        String loginId = req.getLoginId();
+        String pw = req.getPw();
+        userService.login(loginId, pw);
+        User user = userService.findByloginId(loginId);
+        Long deletedId = user.getId();
+        userService.delete(user);
+        return new DeleteUserRes(deletedId);
     }
-
-
-
-    private static void say(DuplicateCheck d){
-        if(d.getB1()==false) throw new DuplicateUserException("로그인 아이디가 이미 존재합니다. 다시 설정해주세요");
-        if(d.getB2()==false) throw new DuplicateUserException("유저 닉네임이 이미 존재합니다. 다시 설정해주세요.");
-    }
-
 
 }

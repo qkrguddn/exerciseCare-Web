@@ -15,8 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import static KKOBUGI.web.domain.dto.CommentDto.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +31,7 @@ public class CommentController {
     /**
      * 저장 */
     @PostMapping("/board/{boardId}")
-    public CommentDto.ResCreateDto saveComment(@PathVariable("boardId") Long id, @RequestBody CommentDto.ReqCreateDto req) {
+    public ResCreateDto saveComment(@PathVariable("boardId") Long id, @RequestBody @Valid ReqCreateDto req) {
         String content = req.getContent();
         Comment comment = new Comment();
         User user = userService.findOne(req.getUserId());
@@ -36,27 +39,27 @@ public class CommentController {
         comment.setComment(req.getContent(),LocalDateTime.now(),user,board);
         commentService.save(comment);
 
-        return new CommentDto.ResCreateDto(comment.getId(),comment.getContent());
+        return new ResCreateDto(comment.getId(),comment.getContent());
     }
 
     /**
      * 삭제
      * : 삭제된 Comment의 id 값 반환 */
     @DeleteMapping("/board/{boardId}/{commentId}")
-    public CommentDto.ResDeleteDto deleteComment(@PathVariable ("boardId") Long id,
+    public ResDeleteDto deleteComment(@PathVariable ("boardId") Long id,
                                                  @PathVariable ("commentId") Long commentId) {
         Board board = boardService.findById(id);
         board.eraseComment(commentService.findOne(commentId));
-        return new CommentDto.ResDeleteDto(commentService.delete(id, commentId));
+        return new ResDeleteDto(commentService.delete(id, commentId));
     }
 
 
     /**
      * 수정 */
     @PatchMapping("/board/{boardId}/{commentId}")
-    public CommentDto.ResFixDto updateComment(@PathVariable("commentId") Long commentId,
-                                              @RequestBody CommentDto.ReqFixDto req){
-        return new CommentDto.ResFixDto(commentService.fix(commentId, req));
+    public ResFixDto updateComment(@PathVariable("commentId") Long commentId,
+                                              @RequestBody ReqFixDto req){
+        return new ResFixDto(commentService.fix(commentId, req));
     }
 
 }

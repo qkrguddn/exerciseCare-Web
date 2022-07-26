@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class UserDto {
     @Data
@@ -25,6 +27,26 @@ public class UserDto {
         private String nickname;
     }
 
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ReqLoginDto{
+        @NotNull
+        private String loginId;
+        @NotNull
+        private String pw;
+    }
+
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ResLoginDto{
+        private Long userId;
+        private String nickname;
+    }
+
     @Data
     @AllArgsConstructor
     public static class UserDtos {
@@ -38,7 +60,9 @@ public class UserDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class DeleteUserReq{
+        @NotEmpty @NotNull
         private String loginId;
+        @NotNull @NotEmpty @NotBlank
         private String pw;
     }
 
@@ -46,7 +70,7 @@ public class UserDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class DeleteUserRes{
-        private Long id;
+        private Long userId;
     }
 
     @Data
@@ -67,7 +91,17 @@ public class UserDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
+    public static class LoginIdCheck{
+        private Boolean b;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class UpdateUserRequest{
+        private Long userId;
+        @NotEmpty
+        @NotNull @NotBlank
         private String nickname;
     }
 

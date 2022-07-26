@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
@@ -27,6 +28,7 @@ public class Comment {
     @Column(updatable = false)
     private LocalDateTime createDate;
 
+    @NotNull
     @ManyToOne(fetch = LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;

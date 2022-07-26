@@ -19,6 +19,7 @@ public class User {
     @NotNull
     private Long id;
 
+    @NotNull
     private String login_Id;
     private String login_Pw;
     private String nickname;
