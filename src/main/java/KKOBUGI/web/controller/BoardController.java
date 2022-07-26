@@ -7,6 +7,8 @@ import KKOBUGI.web.domain.entity.Comment;
 import KKOBUGI.web.domain.dto.CommentDto;
 import KKOBUGI.web.domain.entity.User;
 import KKOBUGI.web.domain.dto.BoardDto;
+import KKOBUGI.web.exception.FindNoUserException;
+import KKOBUGI.web.exception.NoArgumentException;
 import KKOBUGI.web.service.BoardService;
 import KKOBUGI.web.service.CommentService;
 import KKOBUGI.web.service.UserService;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static KKOBUGI.web.domain.dto.BoardDto.*;
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -31,13 +34,16 @@ public class BoardController {
     /**
      * 게시판 생성 */
     @PostMapping("/board")
-    public BoardDto.ResponseBoardDto saveBoard(@RequestBody BoardDto.BoardRequestDto request){
+    public ResponseBoardDto saveBoard(@RequestBody BoardRequestDto request){
+        //필수 인자 예외처리
+        checkArgument(request.getUserId(), "there is no user_Id in request body");
+
         User user = userService.findOne(request.userId);
         Board board = new Board(request.title, request.content,LocalDateTime.now(),null,user);
         Long boardId = boardService.save(board);
         user.saveBoard(boardService.findById(boardId));  // user에도 board추가
 
-        BoardDto.ResponseBoardDto boardDto = BoardToBoardDto(board);
+        ResponseBoardDto boardDto = BoardToBoardDto(board);
         return boardDto;
     }
 
@@ -46,9 +52,10 @@ public class BoardController {
     /**
      * 게시판 수정 */
     @PatchMapping("/board/{id}")
-    public Long fixBoard(@PathVariable("id")Long id, @RequestBody BoardDto.BoardReqFixDto req){
+    public Long fixBoard(@PathVariable("id")Long id, @RequestBody BoardReqFixDto req){
         String title = req.title;
         String content = req.content;
+        checkArgument(title, "there is no title in request body");
         boardService.fixBoard(id,title,content);
         return id;
     }
@@ -67,12 +74,12 @@ public class BoardController {
      * 게시판 전체 조회
      * */
     @GetMapping("/board")
-    public List<BoardDto.ResponseBoardDto> findAll(){
+    public List<ResponseBoardDto> findAll(){
         List<Board> boards = boardService.findAll();
-        List<BoardDto.ResponseBoardDto> boardDtos = new ArrayList<>();
+        List<ResponseBoardDto> boardDtos = new ArrayList<>();
         for (Board b : boards) {
-            BoardDto.UserDto userDto = UserToUserDto(b.getUser());
-            boardDtos.add(new BoardDto.ResponseBoardDto(b.getId(),b.getTitle(),b.getContent(),b.getCreateDate(),b.getModifyDate(),userDto));
+            UserDto userDto = UserToUserDto(b.getUser());
+            boardDtos.add(new ResponseBoardDto(b.getId(),b.getTitle(),b.getContent(),b.getCreateDate(),b.getModifyDate(),userDto));
         }
         return boardDtos;
     }
@@ -84,7 +91,7 @@ public class BoardController {
     @GetMapping("/board/{boardId}")
     public BoardDto.BoardDetailDto boardDetail(@PathVariable("boardId") Long id) {
         Board board = boardService.findById(id);
-        List<BoardDto.CommentDtos> commentDtos = board.getComments().stream().map(o -> new BoardDto.CommentDtos(o.getId(), o.getContent())).collect(toList());
+        List<CommentDtos> commentDtos = board.getComments().stream().map(o -> new CommentDtos(o.getId(), o.getContent())).collect(toList());
         return new BoardDto.BoardDetailDto(board.getId(), board.getTitle(), board.getContent(), commentDtos);
     }
 
@@ -92,11 +99,16 @@ public class BoardController {
     /**
      * Entity -> dto 클래스 변환 함수
      * */
-    public static BoardDto.UserDto UserToUserDto (User user){
-        return new BoardDto.UserDto(user.getId(),user.getLogin_Id(),user.getLogin_Pw(),user.getNickname());
+    public static UserDto UserToUserDto (User user){
+        return new UserDto(user.getId(),user.getLogin_Id(),user.getLogin_Pw(),user.getNickname());
     }
 
-    public static BoardDto.ResponseBoardDto BoardToBoardDto(Board board){
-        return new BoardDto.ResponseBoardDto(board.getId(),board.getTitle(),board.getContent(),board.getCreateDate(),board.getModifyDate(),UserToUserDto(board.getUser()));
+    public static ResponseBoardDto BoardToBoardDto(Board board){
+        return new ResponseBoardDto(board.getId(),board.getTitle(),board.getContent(),board.getCreateDate(),board.getModifyDate(),UserToUserDto(board.getUser()));
+    }
+
+    public void checkArgument(Object o, String message){
+        if(o==null)
+            throw new NoArgumentException(message);
     }
 }
