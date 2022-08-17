@@ -89,6 +89,8 @@ public class BoardDto {
     @NoArgsConstructor
     public static class BoardDetailDto{
         private Long id;
+        private Long userId;
+        private String nickname;
         private String title;
         private String content;
         private List<CommentDtos> commentDtosList = new ArrayList<>();
@@ -100,6 +102,7 @@ public class BoardDto {
     public static class CommentDtos{
         private Long id;
         private Long userId;
+        private String nickname;
         private String content;
     }
 }
