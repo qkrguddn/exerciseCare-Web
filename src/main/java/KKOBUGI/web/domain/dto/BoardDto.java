@@ -99,6 +99,7 @@ public class BoardDto {
     @NoArgsConstructor
     public static class CommentDtos{
         private Long id;
+        private Long userId;
         private String content;
     }
 }

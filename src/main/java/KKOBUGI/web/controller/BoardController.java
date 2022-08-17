@@ -89,7 +89,7 @@ public class BoardController {
     @GetMapping("/board/{boardId}")
     public BoardDto.BoardDetailDto boardDetail(@PathVariable("boardId") Long id) {
         Board board = boardService.findById(id);
-        List<CommentDtos> commentDtos = board.getComments().stream().map(o -> new CommentDtos(o.getId(), o.getContent())).collect(toList());
+        List<CommentDtos> commentDtos = board.getComments().stream().map(o -> new CommentDtos(o.getId(), o.getUser().getId(),o.getContent())).collect(toList());
         return new BoardDto.BoardDetailDto(board.getId(), board.getTitle(), board.getContent(), commentDtos);
     }
 
