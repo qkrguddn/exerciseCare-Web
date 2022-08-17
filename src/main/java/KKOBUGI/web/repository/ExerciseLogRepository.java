@@ -9,7 +9,6 @@ import java.util.List;
 public interface ExerciseLogRepository extends JpaRepository<ExerciseLog, Long> {
 
     void deleteByDate(int date);
-
     List<ExerciseLog> findAllByDate(int date);
 
 }

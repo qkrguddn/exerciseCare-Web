@@ -14,7 +14,7 @@ public class ExerciseLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "exercise_log_id")
+    @Column(name = "exerciseLog_id")
     private Long id;
 
     private String content;
@@ -24,7 +24,7 @@ public class ExerciseLog {
     private int date;
 
     /*FK */
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

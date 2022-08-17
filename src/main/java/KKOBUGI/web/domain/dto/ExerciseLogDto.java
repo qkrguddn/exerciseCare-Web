@@ -6,8 +6,29 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 public class ExerciseLogDto {
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ExerciseLogListDto{
+
+        public Long userId;
+        public String time;
+        public List<InnerData> list;
+    }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class InnerData{
+        public String content;
+        public String detailLog; //무게 or 시간(달리기)
+        public Long number;
+    }
+
 
     @Data
     @AllArgsConstructor
@@ -20,10 +41,12 @@ public class ExerciseLogDto {
         public int date;
         public String time;
     }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ExerciseLogResponseDto{
+        public Long exerciseLogId;
         public String content;
         public String detailLog; //무게 or 시간(달리기)
         public Long number;

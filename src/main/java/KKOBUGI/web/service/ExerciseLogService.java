@@ -1,8 +1,6 @@
 package KKOBUGI.web.service;
 
-import KKOBUGI.web.domain.dto.BoardDto;
 import KKOBUGI.web.domain.dto.ExerciseLogDto;
-import KKOBUGI.web.domain.entity.Board;
 import KKOBUGI.web.domain.entity.ExerciseLog;
 import KKOBUGI.web.domain.entity.User;
 import KKOBUGI.web.repository.ExerciseLogRepository;
@@ -11,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @ToString
 @Service
@@ -21,21 +20,32 @@ import java.util.Optional;
 public class ExerciseLogService {
     @Autowired
     ExerciseLogRepository exerciseLogRepository;
-
+    @Autowired
+    EntityManager em;
     /**
      * 저장
      */
-    public ExerciseLogDto.ExerciseLogResponseDto saveExerciseLog(ExerciseLogDto.ExerciseLogRequestDto exerciseLogRequestDtoDto, User user) {
+    public Long saveExerciseLog(ExerciseLogDto.ExerciseLogListDto listDto,
+                                User user, int date) {
+        for(ExerciseLogDto.InnerData innerData: listDto.getList()) {
+            ExerciseLog exerciseLog = new ExerciseLog(innerData.getContent(), innerData.getDetailLog()
+                    , innerData.getNumber(), date, listDto.getTime(), user);
+            ExerciseLog savedExerciseLog = exerciseLogRepository.save(exerciseLog);
+        }
+
+
+        return listDto.userId;
+    }
+    /*public ExerciseLogDto.ExerciseLogResponseDto saveExerciseLog(ExerciseLogDto.ExerciseLogRequestDto exerciseLogRequestDtoDto,
+                                                                 User user, int date) {
         ExerciseLog exerciseLog = new ExerciseLog(exerciseLogRequestDtoDto.getContent(), exerciseLogRequestDtoDto.getDetailLog(),
                 exerciseLogRequestDtoDto.getNumber(),
-                exerciseLogRequestDtoDto.getDate(), exerciseLogRequestDtoDto.getTime(), user);
+                date, exerciseLogRequestDtoDto.getTime(), user);
         ExerciseLog savedExerciseLog = exerciseLogRepository.save(exerciseLog);
-
         ExerciseLogDto.UserDto userDto = UserToUserDto(user);
         ExerciseLogDto.ExerciseLogResponseDto exerciseLogResponseDto = exerciseLogToExerciseLogDto(savedExerciseLog);
-
         return exerciseLogResponseDto;
-    }
+    }*/
 
     /*
      * 수정
@@ -62,9 +72,18 @@ public class ExerciseLogService {
 
         return exerciseLogDtoList;
     }
+    public void removeExerciseLog(Long exerciseLogId) {
+        ExerciseLog exerciseLog = em.find(ExerciseLog.class, exerciseLogId);
+        em.remove(exerciseLog);
+
+    }
+    /*개별 삭제*/
+    public void deleteExerciseLogByExerciseLogId(Long exerciseLogId){
+        removeExerciseLog(exerciseLogId);
+    }
 
     /*
-     * 삭제
+     * 하루삭제
      * */
     public void deleteExerciseLogByDate(int date, Long userId) {
         List<ExerciseLog> exerciseLogList = exerciseLogRepository.findAllByDate(date);
@@ -84,7 +103,7 @@ public class ExerciseLogService {
     }
 
     public static ExerciseLogDto.ExerciseLogResponseDto exerciseLogToExerciseLogDto(ExerciseLog exerciseLog) {
-        return new ExerciseLogDto.ExerciseLogResponseDto(exerciseLog.getContent(), exerciseLog.getDetailLog()
+        return new ExerciseLogDto.ExerciseLogResponseDto(exerciseLog.getId(),exerciseLog.getContent(), exerciseLog.getDetailLog()
                 , exerciseLog.getNumber(), exerciseLog.getDate(), exerciseLog.getTime(),
                 UserToUserDto(exerciseLog.getUser())
         );
