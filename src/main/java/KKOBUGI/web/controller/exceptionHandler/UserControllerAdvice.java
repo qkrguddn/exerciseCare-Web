@@ -1,4 +1,4 @@
-package KKOBUGI.web.controller.exception;
+package KKOBUGI.web.controller.exceptionHandler;
 
 
 import KKOBUGI.web.exception.DuplicateUserException;

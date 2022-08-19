@@ -1,4 +1,4 @@
-package KKOBUGI.web.controller.exception;
+package KKOBUGI.web.controller.exceptionHandler;
 
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
