@@ -2,9 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/testdb?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    # 윈도우는 matt1235, 맥은 1235
-    password: 1235
+    username: //
+    password: //
 
 
 
