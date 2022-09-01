@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
+
+*{
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* react-calendar */
+.react-calendar { 
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0px 5px 13px 0px #dee4f1;
+    border-radius: 10px;
+    padding:10px;
+    border:none;
+}
+.react-calendar__tile{
+    font-family: "Poppins", sans-serif;
+}
+.react-calendar__month-view__weekdays__weekday{
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.react-calendar__month-view__days__day--weekend{
+    color:#FE6229 !important;
+}
+.react-calendar__navigation button {
+    color:#333;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+}
+.react-calendar__navigation button > span{
+    font-size: 17px;
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+    background-color: #f8f8fa;
+}
+.react-calendar__navigation button[disabled] {
+    background-color: #f0f0f0;
+}
+.react-calendar__month-view__days__day--weekend {
+    color: #ff3e38;
+}
+.react-calendar__tile{
+    font-weight: 700;
+    line-height: 25px;
+    padding:10px;
+}
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background: #f8f8fa;
+    color: #ff3e38;
+    font-weight: 700;
+}
+.react-calendar__tile--now {
+    background: #dee4f1;
+    font-weight: 700;
+    border-radius:10px;
+}
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    font-weight: 700;
+}
+.react-calendar__tile--active {
+    background: #FE6229;
+    font-weight: 700;
+    color: #fff !important;
+    border-radius: 10px;
+}
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+    background: #ff3e38;
+    color: white;
+}
