@@ -57,32 +57,6 @@ public class BoardDto {
         public String nickname;
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class ResponseBoardDetail{
-        ResponseBoardDto boardDto;
-        List<Comment> comments;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class CommentDto{
-        public Long id;
-        public String nickname;
-        public String content;
-        public LocalDateTime createDate;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class RequestBoard{
-        @NotNull
-        public Long boardId;
-    }
-
 
     @Data
     @AllArgsConstructor
@@ -97,6 +71,7 @@ public class BoardDto {
     }
 
     @Data
+
     @AllArgsConstructor
     @NoArgsConstructor
     public static class CommentDtos{

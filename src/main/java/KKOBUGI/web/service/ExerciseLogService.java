@@ -36,17 +36,6 @@ public class ExerciseLogService {
 
         return listDto.userId;
     }
-    /*public ExerciseLogDto.ExerciseLogResponseDto saveExerciseLog(ExerciseLogDto.ExerciseLogRequestDto exerciseLogRequestDtoDto,
-                                                                 User user, int date) {
-        ExerciseLog exerciseLog = new ExerciseLog(exerciseLogRequestDtoDto.getContent(), exerciseLogRequestDtoDto.getDetailLog(),
-                exerciseLogRequestDtoDto.getNumber(),
-                date, exerciseLogRequestDtoDto.getTime(), user);
-        ExerciseLog savedExerciseLog = exerciseLogRepository.save(exerciseLog);
-        ExerciseLogDto.UserDto userDto = UserToUserDto(user);
-        ExerciseLogDto.ExerciseLogResponseDto exerciseLogResponseDto = exerciseLogToExerciseLogDto(savedExerciseLog);
-        return exerciseLogResponseDto;
-    }*/
-
     /*
      * 수정
      * */
@@ -79,7 +68,8 @@ public class ExerciseLogService {
     }
     /*개별 삭제*/
     public void deleteExerciseLogByExerciseLogId(Long exerciseLogId){
-        removeExerciseLog(exerciseLogId);
+//        removeExerciseLog(exerciseLogId);
+        exerciseLogRepository.deleteById(exerciseLogId);
     }
 
     /*
@@ -99,7 +89,7 @@ public class ExerciseLogService {
      * Entity -> dto 클래스 변환 함수
      */
     public static ExerciseLogDto.UserDto UserToUserDto(User user) {
-        return new ExerciseLogDto.UserDto(user.getId(), user.getLogin_Id(), user.getLogin_Pw(), user.getNickname());
+        return new ExerciseLogDto.UserDto(user.getId(), user.getLoginId(), user.getLoginPw(), user.getNickname());
     }
 
     public static ExerciseLogDto.ExerciseLogResponseDto exerciseLogToExerciseLogDto(ExerciseLog exerciseLog) {

@@ -34,14 +34,6 @@ public class CommentDto {
         public String content;
     }
 
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class ResDeleteDto{
-        public Long id;
-    }
-
     @Data
     @AllArgsConstructor
     @NoArgsConstructor

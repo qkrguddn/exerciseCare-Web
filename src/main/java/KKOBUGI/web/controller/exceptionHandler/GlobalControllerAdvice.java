@@ -15,12 +15,6 @@ public class GlobalControllerAdvice {
      * 보편적인 Error 핸들링
      * */
 
-//    @ExceptionHandler(value = Exception.class)
-//    public ResponseEntity exception(Exception e){
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getClass().getName()+" / "
-//        + new String("오류 오류"));
-//    }
-
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity MethodArgumentNotValidException(Exception e){
 

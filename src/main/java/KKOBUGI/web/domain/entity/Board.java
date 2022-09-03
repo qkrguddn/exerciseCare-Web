@@ -2,7 +2,9 @@ package KKOBUGI.web.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,9 +13,11 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "board_id")
     @NotNull
     private Long id;
@@ -36,15 +40,6 @@ public class Board {
     private List<Comment> comments = new ArrayList<>();
 
 
-    public void eraseComment(Comment comment){
-        comments.remove(comment);
-    }
-
-//    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-//    private List<Comment> comments = new ArrayList<>();
-
-    public Board(){}
-
     public Board(String title, String content, LocalDateTime createDate, LocalDateTime modifyDate, User user) {
         this.title = title;
         this.content = content;
@@ -53,14 +48,7 @@ public class Board {
         this.user = user;
     }
 
-    public Board(String title, String content, User user) {
-        this.title = title;
-        this.content = content;
-        this.createDate = LocalDateTime.now();
-        this.user = user;
-    }
-
-    public void setBoard(String title, String content){
+    public void setBoard(String title, String content) {
         this.title = title;
         this.content = content;
         this.modifyDate = LocalDateTime.now();

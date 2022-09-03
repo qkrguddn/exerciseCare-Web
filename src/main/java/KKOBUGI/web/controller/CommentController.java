@@ -32,11 +32,9 @@ public class CommentController {
      * 저장 */
     @PostMapping("/board/{boardId}")
     public ResCreateDto saveComment(@PathVariable("boardId") Long id, @RequestBody @Valid ReqCreateDto req) {
-        String content = req.getContent();
-        Comment comment = new Comment();
         User user = userService.findOne(req.getUserId());
         Board board = boardService.findById(id);
-        comment.setComment(req.getContent(),LocalDateTime.now(),user,board);
+       Comment comment = new Comment(req.getContent(),LocalDateTime.now(),user,board);
         commentService.save(comment);
 
         return new ResCreateDto(comment.getId(),comment.getContent());
@@ -46,19 +44,15 @@ public class CommentController {
      * 삭제
      * : 삭제된 Comment의 id 값 반환 */
     @DeleteMapping("/board/{boardId}/{commentId}")
-    public ResDeleteDto deleteComment(@PathVariable ("boardId") Long id,
-                                                 @PathVariable ("commentId") Long commentId) {
-        Board board = boardService.findById(id);
-        board.eraseComment(commentService.findOne(commentId));
-        return new ResDeleteDto(commentService.delete(id, commentId));
+    public void deleteComment(@PathVariable ("commentId") Long commentId) {
+         commentService.delete(commentId);
     }
-
 
     /**
      * 수정 */
     @PatchMapping("/board/{boardId}/{commentId}")
     public ResFixDto updateComment(@PathVariable("commentId") Long commentId,
-                                              @RequestBody ReqFixDto req){
+                                   @RequestBody ReqFixDto req){
         return new ResFixDto(commentService.fix(commentId, req));
     }
 

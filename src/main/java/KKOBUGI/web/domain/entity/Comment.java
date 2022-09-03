@@ -17,6 +17,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,9 +38,8 @@ public class Comment {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    public Comment(){}
 
-    public void setComment(String content, LocalDateTime createDate, User user, Board board){
+    public Comment(String content, LocalDateTime createDate, User user, Board board){
         this.content = content;
         this.createDate = createDate;
         this.user = user;

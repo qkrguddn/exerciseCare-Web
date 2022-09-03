@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ExerciseLogRepository extends JpaRepository<ExerciseLog, Long> {
-
-    void deleteByDate(int date);
     List<ExerciseLog> findAllByDate(int date);
 
 }

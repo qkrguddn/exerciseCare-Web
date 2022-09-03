@@ -13,7 +13,6 @@ public class UserDto {
     @Data
     @AllArgsConstructor
     public static class CreateUserResponse {
-        // userId 반환
         private Long id;
     }
 
@@ -31,7 +30,7 @@ public class UserDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class ReqLoginDto{
+    public static class ReqLoginDto {
         @NotNull
         private String loginId;
         @NotNull
@@ -42,74 +41,8 @@ public class UserDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class ResLoginDto{
+    public static class ResLoginDto {
         private Long userId;
-        private String nickname;
-    }
-
-    @Data
-    @AllArgsConstructor
-    public static class UserDtos {
-        private Long id;
-        private String login_Id;
-        private String login_Pw;
-        private String nickname;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class DeleteUserReq{
-        @NotEmpty @NotNull
-        private String loginId;
-        @NotNull @NotEmpty @NotBlank
-        private String pw;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class DeleteUserRes{
-        private Long userId;
-    }
-
-    @Data
-    @AllArgsConstructor
-    public static class Result<T> {
-        private int count;
-        private T data;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class DuplicateCheck{
-        private Boolean b1;
-        private Boolean b2;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class LoginIdCheck{
-        private Boolean b;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class UpdateUserRequest{
-        private Long userId;
-        @NotEmpty
-        @NotNull @NotBlank
-        private String nickname;
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class UpdateUserResponse {
-        private Long id;
         private String nickname;
     }
 }
