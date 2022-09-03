@@ -5,10 +5,14 @@
 + ### 개발 기간: 2022.7.3 ~ 2022.8.20
 + ### LANGAUGE : Java
 + ### Tools : Intelij
-+ ### 기술 : SpringBoot, JPA, Mysql
++ ### 기술 : SpringBoot, JPA, Mysql, React
 ---------------------------------
 <br> 
+팀원<br><br>
+fe: 김영덕, 진가영<br><br>
+be: 박형우, 하정수<br><br>
 
+---------------------------------
 # working
 #### 1. Rest API를 제공. 클라이언트 서버간 통신을 하는 Web App 제작 <br><br>
 #### 2. 스프링개발의 디자인 패턴을 준수 <br>
