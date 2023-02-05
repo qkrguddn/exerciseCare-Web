@@ -26,9 +26,8 @@ be: 박형우, 하정수<br><br>
 # 기능
 ### [회원가입](https://user-images.githubusercontent.com/85045177/216799833-a2a5ec8c-3610-4a6d-a84b-0a77c4fddaec.gif)
 ### [로그인 & 로그아웃](https://user-images.githubusercontent.com/85045177/216799848-122753be-5051-48f8-a4e8-937b766f8ce0.gif)
-### [게시판 작성](https://user-images.githubusercontent.com/85045177/216799860-e76361de-4e6a-4723-a9c9-44b95d589c2a.gif)
-### [댓글 작성](https://user-images.githubusercontent.com/85045177/216799871-c4602b29-e379-4919-abbb-8d1ea1e2db9a.gif)
-### [게시글삭제](https://user-images.githubusercontent.com/85045177/216799892-c09c96b4-304b-432b-b07f-5fb24191c82d.gif)
+### [게시판 작성](https://user-images.githubusercontent.com/85045177/216799892-c09c96b4-304b-432b-b07f-5fb24191c82d.gif)
+### [댓글작성](https://user-images.githubusercontent.com/85045177/216800058-b1fbaafc-9cee-46ac-8ef0-fba2f3e57563.gif)
 ### [운동일지기록](https://user-images.githubusercontent.com/85045177/216799711-15c01496-afb0-44d8-99a6-92a5993245aa.gif)
 ---------------------------------
 <br><br>
