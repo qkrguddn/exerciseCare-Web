@@ -32,7 +32,7 @@ be: 박형우, 하정수<br><br>
 ---------------------------------
 <br><br>
 # rest api
-### ex) Board (게시판) <br> 
+### ex) Board(게시판) <br> 
 생성  
 > POST /board <br>
 
